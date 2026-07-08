@@ -1,0 +1,18 @@
+# Streamlit theme. Loaded automatically when running from the project root.
+# WHY a theme file: keeps the base colours consistent so custom CSS in
+# app.py only has to style the interactive components.
+
+[theme]
+base = "dark"
+primaryColor = "#667eea"
+backgroundColor = "#0f0f23"
+secondaryBackgroundColor = "#1a1a2e"
+textColor = "#e0e0ff"
+font = "sans serif"
+
+[server]
+headless = true
+enableCORS = false
+
+[browser]
+gatherUsageStats = false
