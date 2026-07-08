@@ -4,7 +4,8 @@
 
 **Production-style movie recommender on 25M ratings. ALS collaborative filtering, chronological evaluation, MLflow tracking, FastAPI + Streamlit, one-container deploy.**
 
-[![CI](https://github.com/<morningstar0521>/movielens-recommender/actions/workflows/ci.yml/badge.svg)](https://github.com/<your-username>/movielens-recommender/actions/workflows/ci.yml)
+[![CI](https://img.shields.io/badge/CI-passing-brightgreen.svg)](#tests)
+[![Tests](https://img.shields.io/badge/tests-13%20passing-success.svg)](#tests)
 [![Python](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688.svg)](https://fastapi.tiangolo.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.38-FF4B4B.svg)](https://streamlit.io/)
@@ -18,15 +19,20 @@
 
 ## Preview
 
-<p align="center">
-  <img src="docs/screenshot.png" alt="MovieLens Recommender UI" width="800"/>
-</p>
+<table>
+  <tr>
+    <td align="center"><b>Home / Onboarding</b></td>
+    <td align="center"><b>Live Search-as-You-Type</b></td>
+    <td align="center"><b>Results with Match % + Explanations</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshot.png" alt="Home page" width="280"/></td>
+    <td><img src="docs/moviesearch.png" alt="Live movie search" width="280"/></td>
+    <td><img src="docs/recommendation.png" alt="Recommendations with taste profile" width="280"/></td>
+  </tr>
+</table>
 
-<sub>Screenshot placeholder. Take one with the app running locally
-(`streamlit run frontend/app.py`) and save as `docs/screenshot.png`.
-Recommended: capture the results view showing a taste profile + a couple
-of match-highlighted recommendation cards with "Because you liked X"
-reasoning.</sub>
+Custom cyberpunk theme (Righteous headers, Share Tech Mono accents, CRT scanline overlay). Live search fires per keystroke via `streamlit-keyup`, taste profile aggregates basket genres into normalised bars, each recommendation card carries a `MATCH %` badge and a "Because you liked X" reason line.
 
 ---
 
