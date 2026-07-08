@@ -1,0 +1,25 @@
+# Data: never commit MovieLens to git; it is large and licensed separately.
+data/ml-25m/
+data/*.csv
+data/*.zip
+
+# Trained artefacts (except the inference-required subset committed later)
+models/als_f*.joblib
+models/*.tmp
+
+# MLflow local store
+mlruns/
+mlartifacts/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.env
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
