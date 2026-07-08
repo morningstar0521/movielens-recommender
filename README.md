@@ -4,7 +4,7 @@
 
 **Production-style movie recommender on 25M ratings. ALS collaborative filtering, chronological evaluation, MLflow tracking, FastAPI + Streamlit, one-container deploy.**
 
-[![CI](https://github.com/<your-username>/movielens-recommender/actions/workflows/ci.yml/badge.svg)](https://github.com/<your-username>/movielens-recommender/actions/workflows/ci.yml)
+[![CI](https://github.com/<morningstar0521>/movielens-recommender/actions/workflows/ci.yml/badge.svg)](https://github.com/<your-username>/movielens-recommender/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688.svg)](https://fastapi.tiangolo.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.38-FF4B4B.svg)](https://streamlit.io/)
