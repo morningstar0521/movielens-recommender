@@ -2,7 +2,13 @@
 
 # 🎬 MovieLens Recommender
 
-**Production-style movie recommender on 25M ratings. ALS collaborative filtering, chronological evaluation, MLflow tracking, FastAPI + Streamlit, one-container deploy.**
+**Production-style movie recommender on 25M ratings. ALS collaborative filtering, chronological evaluation, MLflow tracking, FastAPI + Streamlit, one-container deploy on Hugging Face Spaces.**
+
+<p>
+  <a href="https://morningstar0521-movielens-recommender.hf.space/">
+    <img src="https://img.shields.io/badge/%F0%9F%A4%97%20Live%20Demo-Try%20it%20now-yellow.svg?style=for-the-badge" alt="Live Demo"/>
+  </a>
+</p>
 
 [![CI](https://img.shields.io/badge/CI-passing-brightgreen.svg)](#tests)
 [![Tests](https://img.shields.io/badge/tests-13%20passing-success.svg)](#tests)
@@ -13,9 +19,15 @@
 [![NDCG@10](https://img.shields.io/badge/NDCG@10-0.151-success.svg)]()
 [![Baseline lift](https://img.shields.io/badge/vs%20popularity-1.5x-brightgreen.svg)]()
 
-[**Quick Start**](#quick-start) · [**Architecture**](#architecture) · [**API**](#api) · [**Design Decisions**](#design-decisions)
+[**Live Demo**](https://morningstar0521-movielens-recommender.hf.space/) · [**Quick Start**](#quick-start) · [**Architecture**](#architecture) · [**API**](#api) · [**Design Decisions**](#design-decisions)
 
 </div>
+
+## Live Demo
+
+**➡ https://morningstar0521-movielens-recommender.hf.space/**
+
+Hosted on Hugging Face Spaces free tier. If it says "sleeping", give it ~30 seconds to wake up on your first visit. Search a few movies you like, hit **FIND MY RECOMMENDATIONS**, watch the taste profile form and get personalised picks with match-highlighting and "Because you liked X" explanations.
 
 ## Preview
 
@@ -292,12 +304,40 @@ CI runs on every push and PR via `.github/workflows/ci.yml`.
 
 ## Deployment
 
-### Hugging Face Spaces (free)
+**Currently live at [morningstar0521-movielens-recommender.hf.space](https://morningstar0521-movielens-recommender.hf.space/)** on Hugging Face Spaces free tier.
 
-1. Train locally or download the bundle from Releases.
-2. Create a Space, SDK = **Docker**.
-3. Push this repo. The included `Dockerfile` runs FastAPI + Streamlit in one container, binds `$PORT=7860`.
-4. Wait ~5 minutes. Space URL serves the UI; API is internal.
+### Hugging Face Spaces (what this repo actually deploys to)
+
+1. Train locally or download the bundle from Releases so `models/` is populated.
+2. Install Git LFS: `brew install git-lfs && git lfs install`.
+3. Create a Space at huggingface.co/new-space, SDK = **Docker**, hardware = **CPU basic (free)**.
+4. Clone the empty Space repo locally, copy the project files in, and enable LFS:
+   ```bash
+   git lfs track "*.joblib" "*.npz" "*.parquet"
+   git add .
+   git commit -m "feat: initial deployment"
+   git push
+   ```
+5. Prepend HF metadata to `README.md`:
+   ```yaml
+   ---
+   title: MovieLens Recommender
+   emoji: 🎬
+   colorFrom: purple
+   colorTo: pink
+   sdk: docker
+   app_port: 7860
+   pinned: false
+   license: mit
+   ---
+   ```
+6. Wait ~5-10 minutes for the first build. Container logs stream in the Space's **Logs → Container** tab.
+
+Key deployment details baked into the `Dockerfile` + `entrypoint.sh`:
+- Non-root user (uid 1000) that HF Spaces requires.
+- `HOME=/home/user` + `STREAMLIT_HOME=/home/user/.streamlit` so Streamlit's config cache is writable.
+- Dedicated `entrypoint.sh` (not inline CMD) to avoid multi-line JSON parsing bugs.
+- `entrypoint.sh` prints diagnostics on boot (Python version, model dir listing, uvicorn/streamlit versions) so container failures are debuggable from the logs alone.
 
 ### Render (alternative)
 
@@ -346,8 +386,15 @@ A recommender does not stay good on its own. Four things to watch:
 
 ## Roadmap
 
-- [x] "Because you liked X" explanations via item-item cosine
+- [x] Chronological train/test split with global cutoff
+- [x] Popularity baseline + implicit ALS with 4-run hyperparameter sweep
+- [x] FastAPI backend + Streamlit frontend with custom cyberpunk theme
+- [x] Live search-as-you-type via `streamlit-keyup`
+- [x] Interactive taste-profile bar chart with per-movie normalisation
+- [x] "Because you liked X" explanations via item-item cosine on ALS factors
+- [x] Genre-match highlighting + MATCH % badge on each recommendation
 - [x] GitHub Actions CI (pytest, 13 tests, green badge)
+- [x] **Deployed live on Hugging Face Spaces**
 - [ ] Content-based fallback with TF-IDF over `genres` + `tags` for movies with < 5 ratings
 - [ ] MMR diversity re-ranking with `?diversity=0.3` query param
 - [ ] ANN index (hnswlib) for sub-1ms latency
@@ -391,4 +438,6 @@ Data by [GroupLens](https://grouplens.org/datasets/movielens/25m/) - MovieLens d
 
 Building software, AI, and full-stack systems. Looking for **SDE / ML internships (2026)** and **full-time offers (2027)**.
 
-[LinkedIn](#) · [GitHub](#) · [Email](mailto:23f2002762@ds.study.iitm.ac.in)
+**Try it live:** https://morningstar0521-movielens-recommender.hf.space/
+
+[Email](mailto:23f2002762@ds.study.iitm.ac.in) · [Hugging Face](https://huggingface.co/morningstar0521)
